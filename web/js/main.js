@@ -4,6 +4,7 @@ import { Camera } from "./usb.js";
 import { session } from "./session.js";
 import { els, state, deliverFrame } from "./viewer.js";
 import { startCapture, stopCapture } from "./log.js";
+import { keepAwake, wakeStatus } from "./wakelock.js";
 import "./ui.js";
 import "./panels.js";
 
@@ -26,10 +27,12 @@ async function run(cam) {
     setStatus("live", "live");
     startCapture();   // record the firmware log from now on, panel open or not
     startMeta();
+    keepAwake(true);  // a phone locking mid-measurement helps nobody
   } catch (err) {
     setStatus(`${err.name || "error"}: ${err.message}`, "err");
     connectBtn.hidden = false;
     session.cam = null;
+    keepAwake(false);
     return;
   }
 
@@ -44,12 +47,14 @@ async function run(cam) {
         connectBtn.hidden = false;
         stopCapture();
         stopMeta();
+        keepAwake(false);
         session.cam = null;
         return;
       }
       // A marker mismatch just means we caught a frame mid-flight; read on.
     }
   }
+  keepAwake(false);
 }
 
 connectBtn.onclick = async () => {
@@ -64,6 +69,7 @@ function showMeta(extra) {
   const rows = Object.entries({
     ...extra,
     "client fps": state.fps.toFixed(1),
+    "screen lock": wakeStatus(),
     firmware: state.info?.fw_version,
     serial: state.info?.serial,
   }).filter(([, v]) => v !== undefined && v !== null && v !== "");

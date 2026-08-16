@@ -36,6 +36,8 @@ modules, which browsers refuse to load over `file://`.
 - **Works on a phone** — the controls and the log collapse into bottom drawers,
   one open at a time, and closing both hands the whole screen to the image;
   read temperatures by dragging a finger across it
+- **Keeps the screen awake** while streaming, so a phone will not dim and lock
+  in the middle of a measurement (Chrome, Edge and Safari 16.4+)
 - **Shutter** (NUC) trigger and gain-mode switch
 - **Firmware log** in a collapsible footer, recorded from the moment you
   connect so events are already there when you go looking
@@ -153,6 +155,7 @@ web/js/viewer.js     state, geometry, rendering, overlay
 web/js/ui.js         control wiring, pointer, PNG/CSV export
 web/js/log.js        firmware log capture and panel
 web/js/panels.js     which secondary panel is showing, in both layouts
+web/js/wakelock.js   holds the screen on while the camera streams
 web/js/text.js       pure helpers for assembling the log
 web/js/palettes.js   colour palettes
 web/js/download.js   handing a generated file to the browser
