@@ -10,7 +10,8 @@
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font: 13px/1.5 ui-sans-serif, -apple-system, system-ui, sans-serif;
-  display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+  display: flex; flex-direction: column; height: 100vh; height: 100dvh;
+  overflow: hidden;
 }
 header {
   display: flex; align-items: center; gap: 11px; flex-wrap: wrap;
@@ -112,4 +113,41 @@ h2 {
   padding: 8px 10px;
   font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
   color: #9fb3c8; white-space: pre-wrap; word-break: break-word;
+}
+
+
+/* ---- narrow screens -------------------------------------------------------
+   A 234px sidebar beside the image leaves a phone almost no room for the
+   picture, so below this width the panel moves under the image and scrolls.
+   The image keeps a fixed share of the viewport at the top. */
+@media (max-width: 760px) {
+  header { gap: 7px; padding: 7px 9px; }
+  header h1 { font-size: 13px; }
+  #logo { width: 20px; height: 20px; }
+
+  /* The select shows its own value ("Ironbow", "Thermal"), so the caption is
+     the first thing that can go. */
+  .lbl { display: none; }
+
+  /* Roomier hit targets for fingers. */
+  select, button { padding: 7px 11px; }
+  .icon { padding: 7px 9px; }
+
+  main { flex-direction: column; }
+  #workspace { flex: none; }
+  /* flex:1 from the base rule sets flex-basis:0, which would beat this
+     height; the image needs a fixed share of a phone screen. */
+  #stage { flex: none; height: 42dvh; padding: 8px; }
+
+  aside {
+    width: auto; flex: 1;
+    border-left: 0; border-top: 1px solid var(--line);
+    padding: 12px;
+  }
+
+  /* Four readings as a 2x2 block rather than a tall list. */
+  .readout { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 16px; }
+  .readout h2, .readout .big { grid-column: 1 / -1; }
+
+  #log { height: 28dvh; }
 }

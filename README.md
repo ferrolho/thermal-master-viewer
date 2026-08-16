@@ -33,6 +33,8 @@ modules, which browsers refuse to load over `file://`.
 - **Rotate** 90° either way, hot/cold markers, reticle, labels, °C / °F
 - **Freeze**, and one-click **PNG** / **CSV** export (the CSV is every pixel's
   temperature in °C, laid out to match what is on screen)
+- **Works on a phone** — the panel moves below the image on narrow screens, and
+  you read temperatures by dragging a finger across the image
 - **Shutter** (NUC) trigger and gain-mode switch
 - **Firmware log** in a collapsible footer, recorded from the moment you
   connect so events are already there when you go looking
@@ -44,6 +46,7 @@ modules, which browsers refuse to load over `file://`.
 | Chrome, Edge, Opera | works                                                                       |
 | Firefox, Safari     | no WebUSB, so no                                                            |
 | macOS               | works as-is                                                                 |
+| Android             | works — plug the camera straight into the phone and open the page           |
 | Linux               | needs a udev rule granting access to `3474:45a2`                            |
 | Windows             | needs the camera bound to WinUSB, e.g. with [Zadig](https://zadig.akeo.ie/) |
 
