@@ -72,9 +72,12 @@ canvas {
 
 aside {
   grid-area: aside; background: var(--panel);
-  border-left: 1px solid var(--line); padding: 12px 14px;
+  border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; min-height: 0;
+}
+#asideBody {
   display: flex; flex-direction: column; gap: 14px;
-  overflow-y: auto; min-height: 0;
+  padding: 12px 14px; overflow-y: auto; min-height: 0;
 }
 .readout { display: flex; flex-direction: column; gap: 6px; }
 .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
@@ -105,18 +108,21 @@ h2 {
   background: var(--panel);
   min-width: 0;
 }
-#logBar { display: flex; align-items: center; gap: 9px; padding: 5px 10px; }
-#logBar button {
+/* Disclosure bar, shared by the log and (on narrow screens) the controls. */
+.bar { display: flex; align-items: center; gap: 9px; padding: 5px 10px; }
+.bar button {
   background: none; border: 0; padding: 3px 4px; color: var(--dim);
   font: inherit; font-size: 11px; cursor: pointer; border-radius: 4px;
 }
-#logBar button:hover { color: var(--text); background: #22272f; }
-#logToggle { font-weight: 600; letter-spacing: .02em; }
-#logChev { display: inline-block; width: 9px; color: var(--accent); }
-body.panel-log #logToggle { color: var(--text); }
-#logBar .mini { font-size: 10px; }
+.bar button:hover { color: var(--text); background: #22272f; }
+.bar .toggle { font-weight: 600; letter-spacing: .02em; }
+.chev { display: inline-block; width: 9px; color: var(--accent); }
+.bar .mini { font-size: 10px; }
+body.panel-log #logToggle,
+body.panel-controls #asideToggle { color: var(--text); }
 
-#tabs { display: none; }
+/* The sidebar is permanent on a wide screen, so it needs no disclosure there. */
+#asideBar { display: none; }
 
 #log {
   margin: 0; height: 190px; overflow: auto;
@@ -150,32 +156,23 @@ body.panel-log #logToggle { color: var(--text); }
      hands the whole screen to the image. */
   main {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto auto auto;
+    grid-template-rows: minmax(0, 1fr) auto auto;
     grid-template-areas:
       "stage"
       "aside"
-      "log"
-      "tabs";
+      "log";
   }
   #stage { padding: 8px; }
 
-  aside {
-    border-left: 0; border-top: 1px solid var(--line);
-    padding: 12px; max-height: 46dvh;
-  }
+  aside { border-left: 0; border-top: 1px solid var(--line); }
+  #asideBar { display: flex; }
+  #asideBody { max-height: 46dvh; padding: 10px 12px 12px; }
 
-  /* Whichever drawer is not selected leaves the grid entirely, so its row
-     collapses and the image takes the space. */
-  body:not(.panel-controls) aside { display: none; }
-  body:not(.panel-log) #logPanel { display: none; }
+  /* Both bars stay put at the bottom; only the open one shows a body, so the
+     two can never share — and shrink — the same strip of screen. Close both
+     and the image gets everything. */
+  body:not(.panel-controls) #asideBody { display: none; }
   #log { height: 34dvh; }
-
-  #tabs {
-    grid-area: tabs; display: flex; gap: 8px;
-    padding: 8px 10px; background: var(--panel);
-    border-top: 1px solid var(--line);
-  }
-  #tabs button { flex: 1; padding: 10px; font-size: 12px; }
 
   /* Four readings as a 2x2 block rather than a tall list. */
   .readout { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 16px; }

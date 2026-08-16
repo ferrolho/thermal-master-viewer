@@ -33,9 +33,9 @@ modules, which browsers refuse to load over `file://`.
 - **Rotate** 90° either way, hot/cold markers, reticle, labels, °C / °F
 - **Freeze**, and one-click **PNG** / **CSV** export (the CSV is every pixel's
   temperature in °C, laid out to match what is on screen)
-- **Works on a phone** — the controls and the log become bottom drawers, one at
-  a time, and closing both hands the whole screen to the image; read
-  temperatures by dragging a finger across it
+- **Works on a phone** — the controls and the log collapse into bottom drawers,
+  one open at a time, and closing both hands the whole screen to the image;
+  read temperatures by dragging a finger across it
 - **Shutter** (NUC) trigger and gain-mode switch
 - **Firmware log** in a collapsible footer, recorded from the moment you
   connect so events are already there when you go looking

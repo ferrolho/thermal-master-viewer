@@ -65,54 +65,61 @@
   </div>
 
   <aside>
-    <div class="readout">
-      <h2>Cursor</h2>
-      <div class="big" id="cursorTemp">--</div>
-      <div class="row"><span class="k">Max</span><span class="v hot" id="maxTemp">--</span></div>
-      <div class="row"><span class="k">Min</span><span class="v cold" id="minTemp">--</span></div>
-      <div class="row"><span class="k">Centre</span><span class="v" id="centreTemp">--</span></div>
-      <div class="row"><span class="k">Average</span><span class="v" id="avgTemp">--</span></div>
+    <div id="asideBar" class="bar">
+      <button id="asideToggle" class="toggle" type="button" aria-expanded="true">
+        <span id="asideChev" class="chev">&#9662;</span> Controls
+      </button>
     </div>
-
-    <div class="stack">
-      <h2>Scale</h2>
-      <canvas id="scale" width="200" height="13"></canvas>
-      <div class="row meta"><span id="scaleLo">--</span><span id="scaleHi">--</span></div>
-    </div>
-
-    <div class="stack">
-      <h2>Overlays</h2>
-      <div class="btns">
-        <button id="tMarkers" class="on">Hot/cold</button>
-        <button id="tReticle" class="on">Reticle</button>
-        <button id="tLabels" class="on">Labels</button>
-        <button id="tSmooth">Smooth</button>
+    <div id="asideBody">
+      <div class="readout">
+        <h2>Cursor</h2>
+        <div class="big" id="cursorTemp">--</div>
+        <div class="row"><span class="k">Max</span><span class="v hot" id="maxTemp">--</span></div>
+        <div class="row"><span class="k">Min</span><span class="v cold" id="minTemp">--</span></div>
+        <div class="row"><span class="k">Centre</span><span class="v" id="centreTemp">--</span></div>
+        <div class="row"><span class="k">Average</span><span class="v" id="avgTemp">--</span></div>
       </div>
-    </div>
 
-    <div class="stack">
-      <h2>Emissivity <span id="emisVal" class="meta"></span></h2>
-      <input type="range" id="emis" min="0.10" max="1.00" step="0.01" value="0.95" style="width:100%">
-      <div class="meta">Reflected <span id="reflVal"></span></div>
-      <input type="range" id="refl" min="-10" max="60" step="1" value="25" style="width:100%">
-    </div>
-
-    <div class="stack">
-      <h2>Camera</h2>
-      <div class="btns">
-        <button id="shutter">Shutter</button>
-        <button id="gainHigh" class="on">High gain</button>
+      <div class="stack">
+        <h2>Scale</h2>
+        <canvas id="scale" width="200" height="13"></canvas>
+        <div class="row meta"><span id="scaleLo">--</span><span id="scaleHi">--</span></div>
       </div>
-      <div class="meta">High gain: &minus;20 to 150&deg;C. Low: 0 to 550&deg;C.</div>
-    </div>
 
-    <div class="stack meta" id="deviceMeta"></div>
+      <div class="stack">
+        <h2>Overlays</h2>
+        <div class="btns">
+          <button id="tMarkers" class="on">Hot/cold</button>
+          <button id="tReticle" class="on">Reticle</button>
+          <button id="tLabels" class="on">Labels</button>
+          <button id="tSmooth">Smooth</button>
+        </div>
+      </div>
+
+      <div class="stack">
+        <h2>Emissivity <span id="emisVal" class="meta"></span></h2>
+        <input type="range" id="emis" min="0.10" max="1.00" step="0.01" value="0.95" style="width:100%">
+        <div class="meta">Reflected <span id="reflVal"></span></div>
+        <input type="range" id="refl" min="-10" max="60" step="1" value="25" style="width:100%">
+      </div>
+
+      <div class="stack">
+        <h2>Camera</h2>
+        <div class="btns">
+          <button id="shutter">Shutter</button>
+          <button id="gainHigh" class="on">High gain</button>
+        </div>
+        <div class="meta">High gain: &minus;20 to 150&deg;C. Low: 0 to 550&deg;C.</div>
+      </div>
+
+      <div class="stack meta" id="deviceMeta"></div>
+    </div>
   </aside>
 
   <section id="logPanel">
-    <div id="logBar">
-      <button id="logToggle" type="button" aria-expanded="false">
-        <span id="logChev">&#9656;</span> Firmware log
+    <div id="logBar" class="bar">
+      <button id="logToggle" class="toggle" type="button" aria-expanded="false">
+        <span id="logChev" class="chev">&#9656;</span> Firmware log
       </button>
       <span id="logCount" class="meta"></span>
       <span class="grow"></span>
@@ -122,10 +129,6 @@
     <pre id="log" hidden></pre>
   </section>
 
-  <nav id="tabs" aria-label="Panels">
-    <button id="tabControls" type="button" aria-pressed="true">Controls</button>
-    <button id="tabLog" type="button" aria-pressed="false">Firmware log</button>
-  </nav>
 </main>
 
 <script type="module" src="js/main.js"></script>
