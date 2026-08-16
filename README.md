@@ -33,8 +33,9 @@ modules, which browsers refuse to load over `file://`.
 - **Rotate** 90° either way, hot/cold markers, reticle, labels, °C / °F
 - **Freeze**, and one-click **PNG** / **CSV** export (the CSV is every pixel's
   temperature in °C, laid out to match what is on screen)
-- **Works on a phone** — the panel moves below the image on narrow screens, and
-  you read temperatures by dragging a finger across the image
+- **Works on a phone** — the controls and the log become bottom drawers, one at
+  a time, and closing both hands the whole screen to the image; read
+  temperatures by dragging a finger across it
 - **Shutter** (NUC) trigger and gain-mode switch
 - **Firmware log** in a collapsible footer, recorded from the moment you
   connect so events are already there when you go looking
@@ -151,6 +152,7 @@ web/js/usb.js        WebUSB driver: commands, streaming, frame parsing
 web/js/viewer.js     state, geometry, rendering, overlay
 web/js/ui.js         control wiring, pointer, PNG/CSV export
 web/js/log.js        firmware log capture and panel
+web/js/panels.js     which secondary panel is showing, in both layouts
 web/js/text.js       pure helpers for assembling the log
 web/js/palettes.js   colour palettes
 web/js/download.js   handing a generated file to the browser

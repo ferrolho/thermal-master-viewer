@@ -5,6 +5,7 @@ import { session } from "./session.js";
 import { els, state, deliverFrame } from "./viewer.js";
 import { startCapture, stopCapture } from "./log.js";
 import "./ui.js";
+import "./panels.js";
 
 const statusEl = els("status");
 const connectBtn = els("connect");

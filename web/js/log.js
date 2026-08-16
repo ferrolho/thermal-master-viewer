@@ -19,10 +19,7 @@ import { trimTo } from "./text.js";
 const POLL_MS = 150;
 const MAX_CHARS = 200000;
 
-const panel = els("logPanel");
 const box = els("log");
-const toggle = els("logToggle");
-const chev = els("logChev");
 const count = els("logCount");
 
 let buffer = "";
@@ -70,20 +67,16 @@ export function stopCapture() {
   timer = null;
 }
 
-function setOpen(next) {
+// Called by panels.js when the log becomes visible or hidden.
+export function showLog(next) {
   open = next;
-  panel.classList.toggle("open", open);
   box.hidden = !open;
-  chev.textContent = open ? "▾" : "▸";
-  toggle.setAttribute("aria-expanded", String(open));
   if (open) {
     dirty = true;
     render();
     box.scrollTop = box.scrollHeight;
   }
 }
-
-toggle.onclick = () => setOpen(!open);
 
 els("logSave").onclick = e => {
   e.stopPropagation();
@@ -99,5 +92,3 @@ els("logClear").onclick = e => {
   box.textContent = "";
   render();
 };
-
-setOpen(false);

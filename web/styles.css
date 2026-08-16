@@ -113,8 +113,10 @@ h2 {
 #logBar button:hover { color: var(--text); background: #22272f; }
 #logToggle { font-weight: 600; letter-spacing: .02em; }
 #logChev { display: inline-block; width: 9px; color: var(--accent); }
-#logPanel.open #logToggle { color: var(--text); }
+body.panel-log #logToggle { color: var(--text); }
 #logBar .mini { font-size: 10px; }
+
+#tabs { display: none; }
 
 #log {
   margin: 0; height: 190px; overflow: auto;
@@ -142,26 +144,41 @@ h2 {
   select, button { padding: 7px 11px; }
   .icon { padding: 7px 9px; }
 
-  /* One column: image on top, controls scrolling in the middle, log pinned to
-     the bottom of the viewport where a log belongs. */
+  /* One column, and only one drawer at a time: the controls and the log both
+     want the bottom of a phone screen, and splitting it between them left
+     neither usable. Tabs at the very bottom choose which — or neither, which
+     hands the whole screen to the image. */
   main {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
     grid-template-areas:
       "stage"
       "aside"
-      "log";
+      "log"
+      "tabs";
   }
-  #stage { height: 42dvh; padding: 8px; }
+  #stage { padding: 8px; }
 
   aside {
     border-left: 0; border-top: 1px solid var(--line);
-    padding: 12px;
+    padding: 12px; max-height: 46dvh;
   }
+
+  /* Whichever drawer is not selected leaves the grid entirely, so its row
+     collapses and the image takes the space. */
+  body:not(.panel-controls) aside { display: none; }
+  body:not(.panel-log) #logPanel { display: none; }
+  #log { height: 34dvh; }
+
+  #tabs {
+    grid-area: tabs; display: flex; gap: 8px;
+    padding: 8px 10px; background: var(--panel);
+    border-top: 1px solid var(--line);
+  }
+  #tabs button { flex: 1; padding: 10px; font-size: 12px; }
 
   /* Four readings as a 2x2 block rather than a tall list. */
   .readout { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 16px; }
   .readout h2, .readout .big { grid-column: 1 / -1; }
 
-  #log { height: 28dvh; }
 }
