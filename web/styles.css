@@ -50,7 +50,9 @@ main { flex: 1; display: flex; min-height: 0; }
 }
 canvas {
   display: block; image-rendering: pixelated; cursor: crosshair;
-  max-width: 100%; max-height: 100%;
+  /* No max-width/max-height here: those clamp each axis independently and so
+     break the aspect ratio. fitStage() already sizes the canvas to fit. */
+  touch-action: none;          /* dragging on the image must not scroll the page */
 }
 #overlay { position: absolute; inset: 0; pointer-events: none; }
 

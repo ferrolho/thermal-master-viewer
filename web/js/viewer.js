@@ -90,7 +90,10 @@ export function fitStage() {
   const [dw, dh] = rotDims();
   if (availW <= 0 || availH <= 0 || !dw) return;
 
-  const k = Math.max(1, Math.min(availW / dw, availH / dh));
+  // No lower clamp: on a phone the stage is often narrower than the sensor is
+  // wide, and refusing to scale below 1:1 used to leave the canvas overflowing
+  // its box, where `max-width` clamped the width alone and squashed the image.
+  const k = Math.min(availW / dw, availH / dh);
   const w = Math.round(dw * k), h = Math.round(dh * k);
   const dpr = window.devicePixelRatio || 1;
 
