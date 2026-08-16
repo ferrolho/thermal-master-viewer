@@ -6,7 +6,7 @@ import { session } from "./session.js";
 import {
   els, state, view, overlay,
   redraw, recompute, drawOverlay,
-  rotDims, fromDisplay, setRotation,
+  rotDims, fromDisplay, setRotation, updateCursorReadout,
 } from "./viewer.js";
 
 // ---- display controls -----------------------------------------------------
@@ -97,8 +97,36 @@ function sensorPos(ev) {
   return { x, y, u, v };
 }
 
-view.addEventListener("mousemove", ev => { state.cursor = sensorPos(ev); drawOverlay(); });
-view.addEventListener("mouseleave", () => { state.cursor = null; drawOverlay(); });
+// Pointer events rather than mouse events, so a finger works as well as a
+// mouse. On touch the reading follows the finger while it is down and stays
+// put when it lifts — there is no hover to fall back on, and clearing it would
+// wipe the number the moment you look away from the screen to read it.
+let tracking = false;
+
+function moveCursor(ev) {
+  state.cursor = sensorPos(ev);
+  drawOverlay();
+  updateCursorReadout();
+}
+
+view.addEventListener("pointerdown", ev => {
+  tracking = true;
+  try { view.setPointerCapture(ev.pointerId); } catch {}
+  moveCursor(ev);
+});
+view.addEventListener("pointermove", ev => {
+  if (tracking || ev.pointerType === "mouse") moveCursor(ev);
+});
+for (const done of ["pointerup", "pointercancel"]) {
+  view.addEventListener(done, () => { tracking = false; });
+}
+view.addEventListener("pointerleave", ev => {
+  if (ev.pointerType === "mouse" && !tracking) {
+    state.cursor = null;
+    drawOverlay();
+    updateCursorReadout();
+  }
+});
 
 // ---- camera controls ------------------------------------------------------
 

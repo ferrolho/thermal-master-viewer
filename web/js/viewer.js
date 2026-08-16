@@ -351,13 +351,19 @@ export function drawOverlay() {
   }
 }
 
+// Separate from updateReadout because the cursor moves between frames, and
+// while the image is frozen no redraw comes along to refresh it.
+export function updateCursorReadout() {
+  els("cursorTemp").textContent = state.cursor && state.celsius
+    ? fmt(state.celsius[state.cursor.y * state.W + state.cursor.x])
+    : "--";
+}
+
 function updateReadout() {
   const s = state.stats;
   els("maxTemp").textContent = fmt(s.hi);
   els("minTemp").textContent = fmt(s.lo);
   els("avgTemp").textContent = fmt(s.avg);
   els("centreTemp").textContent = fmt(s.centre);
-  els("cursorTemp").textContent = state.cursor
-    ? fmt(state.celsius[state.cursor.y * state.W + state.cursor.x])
-    : "--";
+  updateCursorReadout();
 }
