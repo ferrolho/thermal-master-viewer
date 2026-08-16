@@ -36,9 +36,22 @@ input[type=range] { width: 90px; accent-color: var(--accent); vertical-align: mi
 .icon { padding: 5px 7px; line-height: 0; }
 .icon svg { display: block; width: 16px; height: 16px; }
 
-main { flex: 1; display: flex; min-height: 0; }
+/* Grid rather than nested flex so each breakpoint can place the three regions
+   independently — in particular, moving the log below the controls on a phone
+   while keeping it under the image on a desktop. */
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 234px;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "stage aside"
+    "log   aside";
+  min-height: 0;
+}
 #stage {
-  flex: 1; position: relative; display: grid; place-items: center;
+  grid-area: stage;
+  position: relative; display: grid; place-items: center;
   padding: 14px; min-width: 0; min-height: 0;
 }
 /* The frame lives on the wrapper, not on the canvases. That keeps each
@@ -58,9 +71,10 @@ canvas {
 #overlay { position: absolute; inset: 0; pointer-events: none; }
 
 aside {
-  width: 234px; flex: none; background: var(--panel);
+  grid-area: aside; background: var(--panel);
   border-left: 1px solid var(--line); padding: 12px 14px;
-  display: flex; flex-direction: column; gap: 14px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 14px;
+  overflow-y: auto; min-height: 0;
 }
 .readout { display: flex; flex-direction: column; gap: 6px; }
 .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
@@ -84,17 +98,12 @@ h2 {
 #status.live { background: rgba(80,200,120,.16); color: #6ee7a0; }
 #status.err  { background: rgba(255,90,80,.16); color: #ff8f85; }
 
-/* The log lives below the image, inside #workspace, so opening it never
-   resizes the sidebar. */
-#workspace {
-  flex: 1; display: flex; flex-direction: column;
-  min-width: 0; min-height: 0;
-}
-
+/* Its own grid row, so opening it resizes the image and never the sidebar. */
 #logPanel {
-  flex: none;
+  grid-area: log;
   border-top: 1px solid var(--line);
   background: var(--panel);
+  min-width: 0;
 }
 #logBar { display: flex; align-items: center; gap: 9px; padding: 5px 10px; }
 #logBar button {
@@ -133,14 +142,19 @@ h2 {
   select, button { padding: 7px 11px; }
   .icon { padding: 7px 9px; }
 
-  main { flex-direction: column; }
-  #workspace { flex: none; }
-  /* flex:1 from the base rule sets flex-basis:0, which would beat this
-     height; the image needs a fixed share of a phone screen. */
-  #stage { flex: none; height: 42dvh; padding: 8px; }
+  /* One column: image on top, controls scrolling in the middle, log pinned to
+     the bottom of the viewport where a log belongs. */
+  main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "stage"
+      "aside"
+      "log";
+  }
+  #stage { height: 42dvh; padding: 8px; }
 
   aside {
-    width: auto; flex: 1;
     border-left: 0; border-top: 1px solid var(--line);
     padding: 12px;
   }

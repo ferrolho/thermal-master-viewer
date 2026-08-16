@@ -57,26 +57,11 @@
 </header>
 
 <main>
-  <div id="workspace">
-    <div id="stage">
-      <div id="wrap">
-        <canvas id="view"></canvas>
-        <canvas id="overlay"></canvas>
-      </div>
+  <div id="stage">
+    <div id="wrap">
+      <canvas id="view"></canvas>
+      <canvas id="overlay"></canvas>
     </div>
-
-    <section id="logPanel">
-      <div id="logBar">
-        <button id="logToggle" type="button" aria-expanded="false">
-          <span id="logChev">&#9656;</span> Firmware log
-        </button>
-        <span id="logCount" class="meta"></span>
-        <span class="grow"></span>
-        <button id="logSave" class="mini">Save</button>
-        <button id="logClear" class="mini">Clear</button>
-      </div>
-      <pre id="log" hidden></pre>
-    </section>
   </div>
 
   <aside>
@@ -123,6 +108,19 @@
 
     <div class="stack meta" id="deviceMeta"></div>
   </aside>
+
+  <section id="logPanel">
+    <div id="logBar">
+      <button id="logToggle" type="button" aria-expanded="false">
+        <span id="logChev">&#9656;</span> Firmware log
+      </button>
+      <span id="logCount" class="meta"></span>
+      <span class="grow"></span>
+      <button id="logSave" class="mini">Save</button>
+      <button id="logClear" class="mini">Clear</button>
+    </div>
+    <pre id="log" hidden></pre>
+  </section>
 </main>
 
 <script type="module" src="js/main.js"></script>
